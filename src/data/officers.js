@@ -11,7 +11,7 @@ export const officers = [
     role: "Vice President",
     photo: "roy.jpeg",
     email: "rjson@wisc.edu",
-    bio: "Add a short bio: year, major, and what you're excited about this semester.",
+    bio: "Hi, I'm Roy! I'm a 4th-year student studying Statistics with a certificate in Economics. After graduation, I intend to pursue a career in the actuarial field. Outside of academics and work, I enjoy playing the oboe and watching baseball.",
   },
   {
     name: "Evan Bletcher",
