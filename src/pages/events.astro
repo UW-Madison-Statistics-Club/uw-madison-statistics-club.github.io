@@ -1,17 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { upcomingEvents, pastEvents } from "../data/events.js";
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  weekday: "short",
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-});
-
-function formatDate(isoDate) {
-  return dateFormatter.format(new Date(`${isoDate}T00:00:00`));
-}
+import { upcomingEvents, pastEvents, formatEventDate } from "../data/events.js";
 ---
 
 <Layout title="Events" description="Upcoming meetings, workshops, and socials from the UW–Madison Statistics Club.">
@@ -22,15 +11,16 @@ function formatDate(isoDate) {
       <div class="event-list">
         {
           upcomingEvents.map((event) => (
-            <div class="card event-card">
+            <div class:list={["card event-card", { "key-date": event.type === "date" }]}>
               <div class="event-date">
-                <span class="date-main">{formatDate(event.date)}</span>
-                <span class="date-time">{event.time}</span>
+                <span class="date-main">{formatEventDate(event)}</span>
+                {event.time && <span class="date-time">{event.time}</span>}
               </div>
               <div class="event-body">
+                {event.type === "date" && <span class="key-date-tag">Key date</span>}
                 <h3>{event.title}</h3>
-                <p class="event-location">{event.location}</p>
-                <p>{event.description}</p>
+                {event.location && <p class="event-location">{event.location}</p>}
+                {event.description && <p>{event.description}</p>}
               </div>
             </div>
           ))
@@ -46,9 +36,9 @@ function formatDate(isoDate) {
         {
           pastEvents.map((event) => (
             <li>
-              <span class="past-date">{formatDate(event.date)}</span>
+              <span class="past-date">{formatEventDate(event)}</span>
               <span class="past-title">{event.title}</span>
-              <span class="past-desc">{event.description}</span>
+              {event.description && <span class="past-desc">{event.description}</span>}
             </li>
           ))
         }
@@ -82,6 +72,33 @@ function formatDate(isoDate) {
     color: var(--ink-soft);
     font-weight: 500;
     font-size: 0.9rem;
+  }
+
+  .key-date {
+    background: transparent;
+    border-style: dashed;
+    padding-block: 0.75rem;
+    align-items: center;
+  }
+
+  .key-date h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+
+  .key-date .date-main {
+    color: var(--ink-soft);
+  }
+
+  .key-date-tag {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--ink-soft);
   }
 
   .event-location {

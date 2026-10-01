@@ -1,0 +1,319 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site.js";
+import { dataChallenge as dc } from "../data/dataChallenge.js";
+import { upcomingEvents, pastEvents, formatEventDate } from "../data/events.js";
+
+const base = import.meta.env.BASE_URL;
+const timeline = [...pastEvents, ...upcomingEvents]
+  .filter((event) => event.dataChallenge)
+  .concat(dc.milestones)
+  .sort((a, b) => a.date.localeCompare(b.date) || startMinutes(a) - startMinutes(b));
+
+// "6:00–7:00 PM" or "3:00 PM" -> minutes after midnight; untimed items sort last in their day.
+function startMinutes(item) {
+  const match = item.time?.match(/^(\d{1,2}):(\d{2})/);
+  if (!match) return 24 * 60;
+  const hour = Number(match[1]) % 12 + (/PM/.test(item.time) ? 12 : 0);
+  return hour * 60 + Number(match[2]);
+}
+---
+
+<Layout title="Data Challenge" description={`${dc.season} Data Challenge: ${dc.theme}. ${dc.summary}`}>
+  <section class="section">
+    <div class="wrap challenge-hero">
+      <div>
+        <p class="eyebrow">{dc.season} Data Challenge</p>
+        <h1>{dc.theme}</h1>
+        <p class="lead">{dc.summary}</p>
+        {dc.teamSize && <p class="team-size">Teams of {dc.teamSize}</p>}
+        <div class="challenge-actions">
+          {dc.registrationUrl && (
+            <a class="btn" href={dc.registrationUrl} target="_blank" rel="noopener noreferrer">Register Your Team</a>
+          )}
+          <a class="btn btn-outline" href={site.discord} target="_blank" rel="noopener noreferrer">Join Discord for Updates</a>
+        </div>
+      </div>
+      <img class="challenge-photo" src={`${base}audience.jpeg`} alt="Students at a Data Challenge presentation" />
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="wrap two-col">
+      <div>
+        <h2>The Client</h2>
+        <h3>{dc.client.name}</h3>
+        <p>{dc.client.description}</p>
+      </div>
+      <div>
+        <h2>The Core Idea</h2>
+        {dc.coreIdea.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Two Tracks, One Dataset</h2>
+      <div class="grid-2">
+        {
+          dc.tracks.map((track) => (
+            <div class="card">
+              <h3>{track.name}</h3>
+              <p>{track.summary}</p>
+              <ul>
+                {track.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="note">{dc.scoringNote}</p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="wrap">
+      <h2>The Questions</h2>
+      <div class="grid-2">
+        {
+          dc.questions.map((question) => (
+            <div class="card">
+              <p class="eyebrow">{question.label}</p>
+              <h3>{question.title}</h3>
+              <p>{question.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <h2>How You're Judged</h2>
+        <table class="rubric">
+          <thead>
+            <tr><th>Analysis criterion</th><th>Weight</th></tr>
+          </thead>
+          <tbody>
+            {
+              dc.rubric.map((row) => (
+                <tr>
+                  <td>{row.criterion}</td>
+                  <td>{row.weight}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p class="note">{dc.rubricNote}</p>
+      </div>
+      <div>
+        <h2>What You Hand In</h2>
+        <ul>
+          {dc.deliverables.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="timeline">
+    <div class="wrap">
+      <h2>Timeline</h2>
+      <ol class="timeline">
+        {
+          timeline.map((event) => (
+            <li>
+              <span class="timeline-date">{formatEventDate(event)}</span>
+              <div>
+                <h3>{event.title}</h3>
+                {(event.time || event.location) && (
+                  <p class="timeline-meta">{[event.time, event.location].filter(Boolean).join(" · ")}</p>
+                )}
+                {event.description && <p>{event.description}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Ground Rules</h2>
+      <div class="grid-2">
+        {
+          dc.rules.map((rule) => (
+            <div class="card">
+              <h3>{rule.title}</h3>
+              <p>{rule.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    dc.faq.length > 0 && (
+      <section class="section section-soft">
+        <div class="wrap narrow">
+          <h2>FAQ</h2>
+          {dc.faq.map((item) => (
+            <div class="faq-item">
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section">
+    <div class="wrap cta-inner">
+      <h2>Questions?</h2>
+      <p>Ask in our Discord or email us at <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .narrow {
+    max-width: 42rem;
+  }
+
+  .challenge-hero {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+  }
+
+  .team-size {
+    font-weight: 700;
+  }
+
+  .challenge-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .challenge-photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .note {
+    color: var(--ink-soft);
+    margin-top: 1.25rem;
+  }
+
+  .rubric {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  .rubric th,
+  .rubric td {
+    text-align: left;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rubric th:last-child,
+  .rubric td:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .rubric td:last-child {
+    color: var(--badger-red);
+    font-weight: 700;
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0 0 0 1.25rem;
+    margin: 1.5rem 0 0;
+    border-left: 3px solid var(--badger-red);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1rem;
+  }
+
+  .timeline h3 {
+    margin: 0;
+  }
+
+  .timeline-date {
+    color: var(--badger-red);
+    font-weight: 700;
+  }
+
+  .timeline-meta {
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin: 0.25rem 0 0;
+  }
+
+  .faq-item + .faq-item {
+    margin-top: 1.5rem;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 36rem;
+  }
+
+  @media (max-width: 640px) {
+    .challenge-hero,
+    .two-col,
+    .grid-2,
+    .timeline li {
+      grid-template-columns: 1fr;
+    }
+
+    .two-col {
+      gap: 1.5rem;
+    }
+
+    .timeline li {
+      gap: 0.25rem;
+    }
+  }
+</style>

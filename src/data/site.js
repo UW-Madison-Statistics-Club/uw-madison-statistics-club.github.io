@@ -14,6 +14,7 @@ export const nav = [
   { path: "", label: "Home" },
   { path: "about/", label: "About" },
   { path: "events/", label: "Events" },
+  { path: "data-challenge/", label: "Data Challenge" },
   { path: "resources/", label: "Resources" },
   { path: "contact/", label: "Join / Contact" },
 ];

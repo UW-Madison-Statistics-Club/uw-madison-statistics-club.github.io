@@ -1,58 +1,28 @@
 # Content To Fill In
 
-Fill in the "Replace with" line under each item, leave items you don't want to change blank,
-and send this file back — I'll move everything into the site.
+Everything still missing from the site, most important first. Write answers after the colon,
+leave anything you want to skip blank, and send this file back — I'll move it into the site.
 
-## Officer bios (`src/data/officers.js`)
+## Needed soon
 
-### Roy Son — Vice President
-Current: Add a short bio: year, major, and what you're excited about this semester.
-Replace with:
+1. OK to name The Food Group publicly on the Data Challenge page? (Yes / No):
+2. Data Challenge prizes, overall and best forecast (or "none"):
 
-### Rishit Malpani — Board Member
-Current: Add a short bio: year, major, and what you're excited about this semester.
-Replace with:
+## Nice to have
 
-## Upcoming events (`src/data/events.js`)
-
-### Event 1
-Current title: General Meeting: Welcome Back Social
-Current date/time: 2026-09-10, 6:00 PM
-Current location: MSC, Room TBD
-Current description: Kick off the semester, meet the officer team, and learn what the club has planned.
-Replace with (title / date / time / location / description):
-
-### Event 2
-Current title: Workshop: Intro to R and the Tidyverse
-Current date/time: 2026-09-24, 6:00 PM
-Current location: MSC, Room TBD
-Current description: Hands-on workshop covering data wrangling and visualization in R.
-Replace with (title / date / time / location / description):
-
-### Event 3
-Current title: Industry Panel: Careers in Statistics & Data Science
-Current date/time: 2026-10-08, 6:00 PM
-Current location: MSC, Room TBD
-Current description: Alumni and local professionals talk about their paths into industry.
-Replace with (title / date / time / location / description):
-
-## Past events (`src/data/events.js`)
-
-### Past event 1
-Current title: Workshop: Statistical Storytelling with ggplot2
-Current date: 2026-04-16
-Current description: Slides and example code available on the Resources page.
-Replace with (title / date / description):
-
-### Past event 2
-Current title: Case Competition Prep Night
-Current date: 2026-03-05
-Current description: Team formation and strategy session ahead of the spring case competition.
-Replace with (title / date / description):
-
-## Resources (`src/data/resources.js`)
-
-### Workshop slides archive link
-Current link: # (not a real URL)
-Current description: Add a link to a shared Drive/GitHub folder with past workshop materials.
-Replace with (URL / description):
+3. Officer bios (`src/data/officers.js`) — year, major, what you're excited about:
+   - Roy Son (Vice President):
+   - Rishit Malpani (Board Member):
+4. Guest speaker names (`src/data/events.js`):
+   - Industry (Thu, Oct 22):
+   - Academia (Thu, Oct 29):
+5. Workshop slides archive link (`src/data/resources.js`) — currently a dead "#" link:
+6. Short descriptions for events (`src/data/events.js`) — optional, any you want:
+   - Workshop: Graduating from Notebooks (Thu, Oct 8):
+   - Careers in Statistics Panel (Thu, Oct 15):
+   - MinneMUDAC 2026 (Sat, Oct 17):
+   - Data Challenge Final Presentations (Thu, Nov 5):
+   - Journal Club Pilot (Thu, Nov 12):
+   - Probability Bee (Thu, Nov 19):
+   - New Board Member Event (Thu, Dec 3):
+7. Data Challenge FAQ questions + answers (optional; section stays hidden until filled):

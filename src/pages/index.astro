@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { site } from "../data/site.js";
-import { upcomingEvents } from "../data/events.js";
+import { upcomingEvents, formatEventDate } from "../data/events.js";
 
 const base = import.meta.env.BASE_URL;
 const nextEvents = upcomingEvents.slice(0, 3);
@@ -34,6 +34,7 @@ const nextEvents = upcomingEvents.slice(0, 3);
           <img class="card-graphic" src={`${base}audience.jpeg`} alt="Data challenge event" />
           <h3>Data Challenge</h3>
           <p>A hands-on competition where teams tackle a real dataset and present their findings.</p>
+          <a href={`${base}data-challenge/`}>Learn more &rarr;</a>
         </div>
         <div class="card">
           <img class="card-graphic" src={`${base}guest_speaker.jpeg`} alt="Guest speaker event" />
@@ -59,9 +60,9 @@ const nextEvents = upcomingEvents.slice(0, 3);
         {
           nextEvents.map((event) => (
             <div class="card">
-              <p class="eyebrow">{event.date}</p>
+              <p class="eyebrow">{formatEventDate(event)}</p>
               <h3>{event.title}</h3>
-              <p>{event.description}</p>
+              {event.description && <p>{event.description}</p>}
             </div>
           ))
         }
