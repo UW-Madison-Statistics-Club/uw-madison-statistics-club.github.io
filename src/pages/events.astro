@@ -23,7 +23,7 @@ const base = import.meta.env.BASE_URL;
                 <h3>{event.title}</h3>
                 {event.location && <p class="event-location">{event.location}</p>}
                 {event.description && <p>{event.description}</p>}
-                {event.dataChallenge && (
+                {event.dataChallenge && !event.hideDataChallengeLink && (
                   <a class="event-link" href={`${base}data-challenge/`}>Data Challenge details &rarr;</a>
                 )}
               </div>

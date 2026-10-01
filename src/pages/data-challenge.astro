@@ -121,7 +121,16 @@ function startMinutes(item) {
     </div>
   </section>
 
-  <section class="section section-soft" id="timeline">
+  <section class="section section-soft">
+    <div class="wrap narrow">
+      <h2>How to Submit</h2>
+      <ul>
+        {dc.submission.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="timeline">
     <div class="wrap">
       <h2>Timeline</h2>
       <ol class="timeline">
@@ -143,7 +152,7 @@ function startMinutes(item) {
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section-soft">
     <div class="wrap">
       <h2>Ground Rules</h2>
       <div class="grid-2">
@@ -161,7 +170,7 @@ function startMinutes(item) {
 
   {
     dc.faq.length > 0 && (
-      <section class="section section-soft">
+      <section class="section">
         <div class="wrap narrow">
           <h2>FAQ</h2>
           {dc.faq.map((item) => (

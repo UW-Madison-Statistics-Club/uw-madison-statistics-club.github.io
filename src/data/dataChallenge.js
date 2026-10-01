@@ -86,7 +86,7 @@ export const dataChallenge = {
     "predictions.csv for the prediction track (due Sat, Oct 31, 11:59 PM)",
     "Code in your team's private repo that reproduces your predictions and every number in your slides (due Sat, Oct 31, 11:59 PM)",
     "Slide deck (PDF) answering Q1, Q4, Q5, and Q6, emailed to uwstatclub@gmail.com (due Thu, Nov 5, 3:00 PM)",
-    "5–7 minute presentation plus Q&A with judges (Thu, Nov 5, 6:00 PM)",
+    "5–7 minute presentation plus Q&A with judges (Thu, Nov 5, 6:00 PM). Every member should be ready to present and answer questions.",
   ],
 
   rules: [
@@ -103,9 +103,23 @@ export const dataChallenge = {
       text: "Anything you had to buy, or got privately, disqualifies your team. Map the Meal Gap is required — request it from Feeding America early, since approval takes time.",
     },
     {
+      title: "Report anything personal",
+      text: "Names and phone numbers were stripped out. If you spot anything that identifies a person, stop and tell the board right away.",
+    },
+    {
       title: "AI is allowed, with a catch",
       text: "\"The AI suggested it\" is not a reason. Know where every number came from.",
     },
+  ],
+
+  // How submission works, shown as the "How to Submit" section.
+  submission: [
+    "You'll need a GitHub account: the registration form asks for each member's username.",
+    "After registration closes, each team gets a private GitHub repo with the data and a predictions.csv template. Only your team and the board can see it.",
+    "Your submission is whatever is on main at 11:59 PM Sat, Oct 31. There's nothing to upload: just push. At the deadline your repo locks to read-only.",
+    "Every push runs an automatic format check on predictions.csv (✅ or ❌). It checks that the file can be scored, not that it's accurate.",
+    "We rerun your code. If it can't reproduce your predictions.csv, you may lose your prediction score.",
+    "Email your slides (PDF) to uwstatclub@gmail.com by 3:00 PM Thu, Nov 5, with your team name in the subject line.",
   ],
 
   // Deadlines that aren't club meetings. Deadlines without a set time are 11:59 PM.

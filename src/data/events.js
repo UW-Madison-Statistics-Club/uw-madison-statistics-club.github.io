@@ -4,7 +4,8 @@
 // `time`, `location`, and `description` are optional and hidden when left out.
 // Add `type: "date"` for important dates that aren't club meetings (outside competitions,
 // academic calendar) — they stay in the same list but are styled as a lighter "Key date" row.
-// Add `dataChallenge: true` to show an event in the Data Challenge page's timeline.
+// Add `dataChallenge: true` to show an event in the Data Challenge page's timeline and link
+// its Events card to that page (`hideDataChallengeLink: true` keeps it off the card).
 export const upcomingEvents = [
   {
     title: "Data Challenge Kickoff",
@@ -17,6 +18,7 @@ export const upcomingEvents = [
   {
     title: "Workshop: Graduating from Notebooks",
     dataChallenge: true,
+    hideDataChallengeLink: true,
     date: "2026-10-08",
     time: "6:00–7:00 PM",
     location: "2532 Morgridge Hall",
