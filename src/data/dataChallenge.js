@@ -34,7 +34,7 @@ export const dataChallenge = {
     {
       name: "Prediction track",
       summary:
-        "Forecast July 2026 food shelf visits, pounds distributed, and individuals served for every Minnesota county.",
+        "Forecast July 2026 food shelf visits, pounds distributed, and individuals served for the 86 Minnesota counties with food shelves.",
       points: [
         "Scored automatically (RMSLE) against held-out data",
         "Deliverable: one predictions.csv",
@@ -95,8 +95,8 @@ export const dataChallenge = {
       text: "The Food Group's files are internal. Keep them in the club's private repo, never on public GitHub, Kaggle, or an open link. Findings can go in portfolios; raw data can't.",
     },
     {
-      title: "Nothing dated after June 30, 2026",
-      text: "For the forecast, use no July data from any source. Breaking this rule zeroes your prediction score.",
+      title: "Forecast with repo files only",
+      text: "Your forecast may use only the files in your team's repo, which stop at June 30, 2026: no outside data. Breaking this rule scores 0 on the prediction track.",
     },
     {
       title: "Free, public outside data only",
