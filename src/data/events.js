@@ -6,6 +6,7 @@
 // academic calendar) — they stay in the same list but are styled as a lighter "Key date" row.
 // Add `dataChallenge: true` to show an event in the Data Challenge page's timeline and link
 // its Events card to that page (`hideDataChallengeLink: true` keeps it off the card).
+// Add `link: { href, label }` to show a link (e.g. workshop materials) on the event.
 export const upcomingEvents = [
   {
     title: "Data Challenge Kickoff",
@@ -22,7 +23,9 @@ export const upcomingEvents = [
     date: "2026-10-08",
     time: "6:00–7:00 PM",
     location: "2532 Morgridge Hall",
-    description: "Presented by Spencer Venancio.",
+    description:
+      "Presented by Spencer Venancio. Move your analysis out of notebooks and into source files, a clean project structure, Git, and GitHub. Follow along in Python or R.",
+    link: { href: "https://github.com/spencervenancio/gfnb", label: "Workshop materials on GitHub" },
   },
   {
     title: "Careers in Statistics Panel",

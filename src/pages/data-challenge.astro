@@ -144,6 +144,11 @@ function startMinutes(item) {
                   <p class="timeline-meta">{[event.time, event.location].filter(Boolean).join(" · ")}</p>
                 )}
                 {event.description && <p>{event.description}</p>}
+                {event.link && (
+                  <p>
+                    <a href={event.link.href}>{event.link.label} &rarr;</a>
+                  </p>
+                )}
               </div>
             </li>
           ))

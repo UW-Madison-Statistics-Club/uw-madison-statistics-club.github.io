@@ -16,9 +16,8 @@ leave anything you want to skip blank, and send this file back — I'll move it 
 4. Guest speaker names (`src/data/events.js`):
    - Industry (Thu, Oct 22):
    - Academia (Thu, Oct 29):
-5. Workshop slides archive link (`src/data/resources.js`) — currently a dead "#" link:
+5. Past workshop materials (`src/data/resources.js`) — Graduating from Notebooks is linked; add others here as they happen:
 6. Short descriptions for events (`src/data/events.js`) — optional, any you want:
-   - Workshop: Graduating from Notebooks (Thu, Oct 8):
    - Careers in Statistics Panel (Thu, Oct 15):
    - MinneMUDAC 2026 (Sat, Oct 17):
    - Data Challenge Final Presentations (Thu, Nov 5):

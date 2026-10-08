@@ -43,9 +43,10 @@ export const resourceGroups = [
     heading: "Past Talks & Slides",
     links: [
       {
-        label: "Workshop slides archive",
-        href: "#",
-        description: "Add a link to a shared Drive/GitHub folder with past workshop materials.",
+        label: "Graduating from Notebooks (Oct 8, 2026)",
+        href: "https://github.com/spencervenancio/gfnb",
+        description:
+          "Notes and code for moving from notebooks to source files, project structure, Git, and GitHub, in Python and R.",
       },
     ],
   },
