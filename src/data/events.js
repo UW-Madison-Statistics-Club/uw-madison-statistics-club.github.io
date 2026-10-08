@@ -9,14 +9,6 @@
 // Add `link: { href, label }` to show a link (e.g. workshop materials) on the event.
 export const upcomingEvents = [
   {
-    title: "Data Challenge Kickoff",
-    dataChallenge: true,
-    date: "2026-10-01",
-    time: "6:00–7:00 PM",
-    location: "2532 Morgridge Hall",
-    description: "The Fall 2026 challenge, Food Need vs. Demand, officially begins.",
-  },
-  {
     title: "Workshop: Graduating from Notebooks",
     dataChallenge: true,
     hideDataChallengeLink: true,
@@ -99,6 +91,14 @@ export const upcomingEvents = [
 ];
 
 export const pastEvents = [
+  {
+    title: "Data Challenge Kickoff",
+    dataChallenge: true,
+    date: "2026-10-01",
+    time: "6:00–7:00 PM",
+    location: "2532 Morgridge Hall",
+    description: "The Fall 2026 challenge, Food Need vs. Demand, officially begins.",
+  },
   {
     title: "Kickoff Meeting",
     date: "2026-09-24",
