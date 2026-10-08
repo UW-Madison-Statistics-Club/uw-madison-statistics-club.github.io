@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Nightly rebuild so events move from Upcoming to Past on their own (src/data/events.js).
+  # 06:00 UTC is just after midnight in Madison year-round.
+  schedule:
+    - cron: "0 6 * * *"
 
 permissions:
   contents: read

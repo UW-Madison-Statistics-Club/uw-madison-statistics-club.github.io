@@ -7,7 +7,31 @@
 // Add `dataChallenge: true` to show an event in the Data Challenge page's timeline and link
 // its Events card to that page (`hideDataChallengeLink: true` keeps it off the card).
 // Add `link: { href, label }` to show a link (e.g. workshop materials) on the event.
-export const upcomingEvents = [
+//
+// Keep every event in this one list, in any order. At build time each event is sorted into
+// Upcoming or Past by comparing its date (or `endDate`) with today in Madison, and the deploy
+// workflow rebuilds the site every night, so nobody has to move events by hand. Key dates
+// (`type: "date"`) drop off once they pass instead of showing up under Past Events.
+const events = [
+  {
+    title: "Data Challenge Kickoff",
+    dataChallenge: true,
+    date: "2026-10-01",
+    time: "6:00–7:00 PM",
+    location: "2532 Morgridge Hall",
+    description: "The Fall 2026 challenge, Food Need vs. Demand, officially begins.",
+  },
+  {
+    title: "Kickoff Meeting",
+    date: "2026-09-24",
+    time: "6:00–7:00 PM",
+    location: "2532 Morgridge Hall",
+  },
+  {
+    title: "Org Fair",
+    date: "2026-09-09",
+    endDate: "2026-09-10",
+  },
   {
     title: "Workshop: Graduating from Notebooks",
     dataChallenge: true,
@@ -31,10 +55,13 @@ export const upcomingEvents = [
     type: "date",
   },
   {
-    title: "Guest Speaker: Industry",
+    title: "Guest Speaker: Rick Chappell",
     date: "2026-10-22",
     time: "6:00–7:00 PM",
     location: "2532 Morgridge Hall",
+    description:
+      "Rick Chappell, Professor of Statistics and of Biostatistics & Medical Informatics at UW–Madison and a specialist in clinical trial design, will talk about a few different topics, hinting at the underlying math without getting into the nitty-gritty.",
+    link: { href: "https://stat.wisc.edu/staff/chappell-rick/", label: "About Rick Chappell" },
   },
   {
     title: "Guest Speaker: Academia",
@@ -90,27 +117,16 @@ export const upcomingEvents = [
   },
 ];
 
-export const pastEvents = [
-  {
-    title: "Data Challenge Kickoff",
-    dataChallenge: true,
-    date: "2026-10-01",
-    time: "6:00–7:00 PM",
-    location: "2532 Morgridge Hall",
-    description: "The Fall 2026 challenge, Food Need vs. Demand, officially begins.",
-  },
-  {
-    title: "Kickoff Meeting",
-    date: "2026-09-24",
-    time: "6:00–7:00 PM",
-    location: "2532 Morgridge Hall",
-  },
-  {
-    title: "Org Fair",
-    date: "2026-09-09",
-    endDate: "2026-09-10",
-  },
-];
+// YYYY-MM-DD in Madison's time zone, so an event stays "upcoming" through the end of its day
+// even though the build runs in UTC.
+const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date());
+const isPast = (event) => (event.endDate ?? event.date) < today;
+const byDate = (a, b) => a.date.localeCompare(b.date);
+
+export const upcomingEvents = events.filter((event) => !isPast(event)).sort(byDate);
+export const pastEvents = events
+  .filter((event) => isPast(event) && event.type !== "date")
+  .sort((a, b) => byDate(b, a));
 
 const dayFormatter = new Intl.DateTimeFormat("en-US", {
   weekday: "short",
