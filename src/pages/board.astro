@@ -353,20 +353,34 @@ const years = ["Freshman", "Sophomore", "Junior", "Senior", "Other"];
 
       button.disabled = true;
       status.textContent = "Sending…";
+      // Formspree explains rejected submissions in `errors`; show those instead of a bare failure.
+      let problem = "";
       try {
         const response = await fetch(endpoint, {
           method: "POST",
           headers: { Accept: "application/json", "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        if (!response.ok) throw new Error(`Formspree returned ${response.status}`);
-        form.hidden = true;
-        success.hidden = false;
-        success.focus();
+        if (response.ok) {
+          form.hidden = true;
+          success.hidden = false;
+          success.focus();
+          return;
+        }
+        const body = await response.json().catch(() => null);
+        // e.g. { field: "email", message: "should be an email" } -> "Email should be an email."
+        problem = (body?.errors ?? [])
+          .filter((error: { message?: string }) => error.message)
+          .map((error: { field?: string; message: string }) => {
+            const text = error.field ? `${error.field.replace(/_/g, " ")} ${error.message}` : error.message;
+            return text.charAt(0).toUpperCase() + text.slice(1).replace(/\.?$/, ".");
+          })
+          .join(" ");
       } catch {
-        status.textContent = `Something went wrong, so your application wasn't sent. Please try again, or email ${form.dataset.email}.`;
-        button.disabled = false;
+        // Network failure: fall through to the general message.
       }
+      status.textContent = `Something went wrong, so your application wasn't sent.${problem ? ` ${problem}` : ""} Please try again, or email ${form.dataset.email}.`;
+      button.disabled = false;
     });
   }
 </script>

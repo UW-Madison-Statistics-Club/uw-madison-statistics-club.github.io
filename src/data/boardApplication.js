@@ -11,7 +11,7 @@ export const boardApplication = {
   term: "Spring 2027",
   deadline: "2026-11-22",
   deadlineLabel: "Sunday, Nov 22 at 11:59 PM",
-  formspreeId: "",
+  formspreeId: "xqpqaqrz",
   timeCommitment:
     "Expect about 2–4 hours a week: the Thursday 6:00–7:00 PM meeting plus your role's planning, with more in the weeks your events happen.",
 
