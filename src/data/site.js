@@ -5,6 +5,7 @@ export const site = {
   email: "uwstatclub@gmail.com",
   instagram: "https://www.instagram.com/statsclubuwmadison/",
   linkedin: "https://www.linkedin.com/company/undergraduate-statistics-club-uw-madison/",
+  youtube: "https://www.youtube.com/@uwmadisonstatclub",
   discord: "https://discord.gg/7uJsEbEFWY",
   wisconsinOrgsUrl: "https://win.wisc.edu/",
 };

@@ -6,7 +6,9 @@
 // academic calendar) — they stay in the same list but are styled as a lighter "Key date" row.
 // Add `dataChallenge: true` to show an event in the Data Challenge page's timeline and link
 // its Events card to that page (`hideDataChallengeLink: true` keeps it off the card).
-// Add `link: { href, label }` to show a link (e.g. workshop materials) on the event.
+// Add `link: { href, label }` to show a link (e.g. workshop materials) on the event, or
+// `link: { path, label }` for a page on this site (e.g. `path: "board/"`).
+// Add `video` (a YouTube URL) to link a recording of the event.
 //
 // Keep every event in this one list, in any order. At build time each event is sorted into
 // Upcoming or Past by comparing its date (or `endDate`) with today in Madison, and the deploy
@@ -44,7 +46,7 @@ const events = [
     link: { href: "https://github.com/spencervenancio/gfnb", label: "Workshop materials on GitHub" },
   },
   {
-    title: "Careers in Statistics Panel",
+    title: "Poker Social",
     date: "2026-10-15",
     time: "6:00–7:00 PM",
     location: "2532 Morgridge Hall",
@@ -62,12 +64,14 @@ const events = [
     description:
       "Rick Chappell, Professor of Statistics and of Biostatistics & Medical Informatics at UW–Madison and a specialist in clinical trial design, will talk about a few different topics, hinting at the underlying math without getting into the nitty-gritty.",
     link: { href: "https://stat.wisc.edu/staff/chappell-rick/", label: "About Rick Chappell" },
+    video: "https://www.youtube.com/watch?v=9Ih0gL7HImU",
   },
   {
-    title: "Guest Speaker: Academia",
+    title: "The Statistics of an Election",
     date: "2026-10-29",
     time: "6:00–7:00 PM",
     location: "2532 Morgridge Hall",
+    description: "Polls, campaign research, and prediction markets. Presented by Rishit Malpani.",
   },
   {
     title: "Data Challenge Final Presentations",
@@ -89,16 +93,17 @@ const events = [
     location: "2532 Morgridge Hall",
   },
   {
+    title: "Board Applications Due",
+    date: "2026-11-22",
+    type: "date",
+    description: "Executive board applications for Spring 2027 close at 11:59 PM.",
+    link: { path: "board/", label: "Apply to the board" },
+  },
+  {
     title: "Thanksgiving Break",
     date: "2026-11-26",
     endDate: "2026-11-29",
     type: "date",
-  },
-  {
-    title: "New Board Member Event",
-    date: "2026-12-03",
-    time: "6:00–7:00 PM",
-    location: "2532 Morgridge Hall",
   },
   {
     title: "Last Day of Class",

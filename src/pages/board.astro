@@ -1,0 +1,757 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site.js";
+import { boardApplication as app } from "../data/boardApplication.js";
+
+const base = import.meta.env.BASE_URL;
+const featuredRoles = app.roles.filter((role) => role.featured);
+const otherRoles = app.roles.filter((role) => !role.featured);
+const roleTitles = app.roles.map((role) => role.title);
+const endpoint = app.formspreeId ? `https://formspree.io/f/${app.formspreeId}` : "";
+const years = ["Freshman", "Sophomore", "Junior", "Senior", "Other"];
+---
+
+<Layout
+  title="Join the Board"
+  description={`Apply to the UW–Madison Statistics Club executive board for ${app.term}. Applications are due ${app.deadlineLabel}.`}
+>
+  <section class="section">
+    <div class="wrap board-hero">
+      <div>
+        <p class="eyebrow">Executive Board · {app.term}</p>
+        <h1>Join the Board</h1>
+        <p class="lead">
+          The executive board is the heart and soul of the Statistics Club, working together to plan
+          our weekly events across competitions, professional development, and community building. Next
+          semester, many of our board members are moving on, and we're looking to bring on a small new
+          team of ambitious, self-starting, statistics-passionate people to take the club to new heights.
+        </p>
+        <p class="deadline">Applications due <strong>{app.deadlineLabel}</strong></p>
+        <div class="board-actions">
+          <a class="btn" href="#apply">Apply Now</a>
+          <a class="btn btn-outline" href={`${base}about/`}>Meet the Current Board</a>
+        </div>
+      </div>
+      <img class="board-photo" src={`${base}poker.jpeg`} alt="Club members at a Stats Club poker night" />
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="wrap">
+      <h2>Open Roles</h2>
+      <p class="section-intro">
+        Rank your top two roles on the application, or choose “open to any role.” Each director owns
+        their area: coming up with ideas, planning the events, and making the slides. We polish ideas
+        together at board meetings, and the whole board pitches in to make each event happen.
+      </p>
+      {
+        featuredRoles.map((role) => (
+          <div class="card role-card role-featured">
+            <div class="role-head">
+              <h3>{role.title}</h3>
+              {role.spots && <span class="spots">{role.spots}</span>}
+            </div>
+            <p>{role.duties}</p>
+          </div>
+        ))
+      }
+      <div class="grid-roles">
+        {
+          otherRoles.map((role) => (
+            <div class="card role-card">
+              <div class="role-head">
+                <h3>{role.title}</h3>
+                {role.spots && <span class="spots">{role.spots}</span>}
+              </div>
+              <p>{role.duties}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="commitment">{app.timeCommitment}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <h2>Who Should Apply</h2>
+        <ul class="checklist">
+          {app.eligibility.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>How We Choose</h2>
+        <p>
+          Every applicant who meets the requirements gets a 15-minute interview with the current board,
+          where we'll talk through your pitch together. After interviews, the board discusses the
+          candidates and picks the best fit for each role by consensus, as our constitution sets out.
+        </p>
+        <p>
+          We aren't looking for a long résumé. We're looking for people who will show up, follow through,
+          and bring ideas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="wrap two-col">
+      <div>
+        <h2>Timeline</h2>
+        <ol class="timeline">
+          {
+            app.timeline.map((step) => (
+              <li>
+                <span class="timeline-date">{step.date}</span>
+                <span class="timeline-label">{step.label}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <div class="card questions-card">
+        <h2>Questions?</h2>
+        <p>
+          Ask any board member at a Thursday meeting, message us on{" "}
+          <a href={site.discord} target="_blank" rel="noopener noreferrer">Discord</a>, or email{" "}
+          <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+        <a class="btn" href="#apply">Go to the Application</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apply">
+    <div class="wrap form-wrap">
+      <h2>Apply</h2>
+      <p class="section-intro">
+        It takes about 10 minutes: a few quick questions and one pitch. Applications are due{" "}
+        <strong>{app.deadlineLabel}</strong>.
+      </p>
+
+      <form class="apply-form" id="apply-form" data-endpoint={endpoint} data-email={site.email}>
+        <fieldset>
+          <legend>About you</legend>
+          <div class="field-row">
+            <label class="field">
+              <span>Full name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="field">
+              <span>wisc.edu email</span>
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                required
+                pattern="[^@\s]+@wisc\.edu"
+                title="Use your @wisc.edu email address"
+              />
+            </label>
+          </div>
+          <label class="field">
+            <span>Major(s) and certificates</span>
+            <input type="text" name="major" required />
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>Year</span>
+              <select name="year" required>
+                <option value="">Choose one</option>
+                {years.map((year) => <option>{year}</option>)}
+              </select>
+            </label>
+            <label class="field">
+              <span>Expected graduation</span>
+              <input type="text" name="graduation" placeholder="e.g. May 2029" required />
+            </label>
+          </div>
+          <label class="check">
+            <input type="checkbox" name="enrollment" value="Yes" required />
+            <span>I'll be enrolled at UW–Madison with at least 6 credits in {app.term}.</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Roles</legend>
+          <div class="field-row">
+            <label class="field">
+              <span>1st choice role</span>
+              <select name="first_choice" required>
+                <option value="">Choose one</option>
+                {roleTitles.map((title) => <option>{title}</option>)}
+                <option>Open to any role</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>2nd choice role</span>
+              <select name="second_choice" required>
+                <option value="">Choose one</option>
+                {roleTitles.map((title) => <option>{title}</option>)}
+                <option>No second choice</option>
+              </select>
+            </label>
+          </div>
+          <fieldset class="inline-group">
+            <legend>Will you be at UW–Madison through Fall 2027?</legend>
+            <div class="options">
+              {
+                ["Yes", "No", "Not sure yet"].map((value) => (
+                  <label class="check">
+                    <input type="radio" name="through_fall_2027" value={value} required />
+                    <span>{value}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <fieldset class="inline-group">
+            <legend>Would you want to lead the club as President in Fall 2027?</legend>
+            <div class="options">
+              {
+                ["Yes", "Maybe", "No"].map((value) => (
+                  <label class="check">
+                    <input type="radio" name="president_fall_2027" value={value} required />
+                    <span>{value}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <fieldset>
+          <legend>Interview availability</legend>
+          <p class="hint">Interviews are 15 minutes, in person or on Zoom. Check every time that works for you.</p>
+          <table class="slots">
+            <thead>
+              <tr>
+                <th scope="col"><span class="sr-only">Day</span></th>
+                {
+                  app.interviewTimes.map((time) => (
+                    <th scope="col">
+                      {time.label}
+                      <span class="hours">{time.hours}</span>
+                    </th>
+                  ))
+                }
+              </tr>
+            </thead>
+            <tbody>
+              {
+                app.interviewDays.map((day) => (
+                  <tr>
+                    <th scope="row">{day}</th>
+                    {app.interviewTimes.map((time) => (
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="availability"
+                          value={`${day} (${time.label.toLowerCase()})`}
+                          aria-label={`${day}, ${time.label}`}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+          <p class="field-error" data-error="availability" hidden>Check at least one time that works.</p>
+        </fieldset>
+
+        <fieldset class="pitch-fieldset">
+          <legend>Your pitch</legend>
+          <p class="pitch-prompt" id="pitch-prompt">{app.pitch.prompt}</p>
+          <p>Tell us:</p>
+          <ul class="pitch-parts">
+            {
+              app.pitch.parts.map((part) => (
+                <li>
+                  <strong>{part.label}</strong>{" "}{part.detail}
+                </li>
+              ))
+            }
+          </ul>
+          <textarea
+            name="pitch"
+            rows="12"
+            maxlength={app.pitch.maxChars}
+            required
+            aria-labelledby="pitch-prompt"
+            aria-describedby="pitch-note"></textarea>
+          <p class="hint" id="pitch-note">
+            <span data-count>0</span> / {app.pitch.maxChars.toLocaleString("en-US")} characters. {app.pitch.note}
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Optional</legend>
+          <label class="field">
+            <span>Resume link</span>
+            <input type="url" name="resume" placeholder="https://" />
+          </label>
+          <p class="hint">A Google Drive or other link. Make sure anyone at UW–Madison can view it.</p>
+        </fieldset>
+
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="submit-row">
+          <button class="btn" type="submit" disabled={!endpoint}>Submit Application</button>
+          {!endpoint && <p class="hint">The form isn't connected yet, so it can't be submitted.</p>}
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="card form-success" tabindex="-1" hidden>
+        <h3>Thanks for applying!</h3>
+        <p>{app.confirmation}</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Sends the application to Formspree as JSON and swaps in a thank-you message.
+  const form = document.querySelector<HTMLFormElement>("#apply-form");
+
+  if (form) {
+    const endpoint = form.dataset.endpoint ?? "";
+    const status = form.querySelector<HTMLElement>(".form-status")!;
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+    const success = document.querySelector<HTMLElement>(".form-success")!;
+    const pitch = form.querySelector<HTMLTextAreaElement>("textarea[name=pitch]")!;
+    const count = form.querySelector<HTMLElement>("[data-count]")!;
+    const slots = Array.from(form.querySelectorAll<HTMLInputElement>("input[name=availability]"));
+    const slotError = form.querySelector<HTMLElement>("[data-error=availability]")!;
+
+    pitch.addEventListener("input", () => {
+      count.textContent = pitch.value.length.toLocaleString("en-US");
+    });
+
+    // A checkbox grid has no built-in "pick at least one", so check it by hand.
+    const checkSlots = () => {
+      const picked = slots.some((slot) => slot.checked);
+      slots[0]?.setCustomValidity(picked ? "" : "Check at least one interview time.");
+      slotError.hidden = picked;
+      return picked;
+    };
+    slots.forEach((slot) => slot.addEventListener("change", checkSlots));
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      checkSlots();
+      if (!form.reportValidity() || !endpoint) return;
+
+      const data = new FormData(form);
+      const payload: Record<string, string> = {};
+      for (const key of new Set(data.keys())) {
+        payload[key] = data.getAll(key).map(String).join("; ");
+      }
+      payload._subject = `Board application: ${payload.name}`;
+
+      button.disabled = true;
+      status.textContent = "Sending…";
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { Accept: "application/json", "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error(`Formspree returned ${response.status}`);
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      } catch {
+        status.textContent = `Something went wrong, so your application wasn't sent. Please try again, or email ${form.dataset.email}.`;
+        button.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .board-hero {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .board-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+  }
+
+  .deadline {
+    font-size: 1.05rem;
+  }
+
+  .board-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .board-photo {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .section-intro {
+    color: var(--ink-soft);
+    max-width: 44rem;
+  }
+
+  .role-featured {
+    margin-top: 1.5rem;
+    border-left: 4px solid var(--badger-red);
+  }
+
+  .grid-roles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+  }
+
+  .role-card h3 {
+    margin: 0;
+    color: var(--badger-red);
+  }
+
+  .role-card p {
+    margin-bottom: 0;
+  }
+
+  .spots {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+
+  .commitment {
+    margin-top: 1.5rem;
+    font-weight: 600;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .checklist {
+    padding-left: 1.25rem;
+  }
+
+  .checklist li {
+    margin-bottom: 0.6rem;
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    border-left: 3px solid var(--badger-red);
+  }
+
+  .timeline li {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 1.25rem 1.25rem;
+  }
+
+  .timeline-date {
+    color: var(--badger-red);
+    font-weight: 700;
+  }
+
+  .timeline-label {
+    color: var(--ink);
+  }
+
+  .pitch-prompt {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .pitch-parts {
+    padding-left: 1.25rem;
+  }
+
+  .pitch-parts li {
+    margin-bottom: 0.6rem;
+  }
+
+  .pitch-note {
+    color: var(--ink-soft);
+    margin-bottom: 0;
+  }
+
+  .form-wrap {
+    max-width: 48rem;
+  }
+
+  .apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .apply-form[hidden],
+  .form-success[hidden] {
+    display: none;
+  }
+
+  .apply-form fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+    margin: 0;
+    padding: 1.25rem 1.5rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--paper);
+  }
+
+  .apply-form fieldset > p,
+  .apply-form fieldset > ul {
+    margin: 0;
+  }
+
+  .apply-form legend {
+    padding: 0 0.4rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--badger-red);
+  }
+
+  .apply-form .inline-group {
+    gap: 0.4rem;
+    padding: 0;
+    border: none;
+  }
+
+  .apply-form .inline-group legend {
+    padding: 0;
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-weight: 600;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .apply-form input[type="text"],
+  .apply-form input[type="email"],
+  .apply-form input[type="url"],
+  .apply-form select,
+  .apply-form textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid #cfc8c2;
+    border-radius: var(--radius);
+  }
+
+  .apply-form textarea {
+    min-height: 14rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .apply-form input:focus-visible,
+  .apply-form select:focus-visible,
+  .apply-form textarea:focus-visible {
+    outline: 2px solid var(--badger-red);
+    outline-offset: 1px;
+  }
+
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-weight: 400;
+  }
+
+  .check input,
+  .slots input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0.25rem 0 0;
+    accent-color: var(--badger-red);
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .slots {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .slots th,
+  .slots td {
+    padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .slots thead th {
+    font-size: 0.9rem;
+  }
+
+  .slots th[scope="row"] {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .slots .hours {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+
+  .pitch-fieldset {
+    border-left: 4px solid var(--badger-red) !important;
+  }
+
+  .field-error {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--badger-red);
+  }
+
+  .submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .submit-row .btn {
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .submit-row .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-status {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .form-success {
+    margin-top: 1.5rem;
+    border-left: 4px solid var(--badger-red);
+  }
+
+  .form-success h3 {
+    margin-top: 0;
+    color: var(--badger-red);
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .questions-card {
+    align-self: start;
+  }
+
+  .questions-card h2 {
+    margin-top: 0;
+  }
+
+  @media (max-width: 820px) {
+    .board-hero,
+    .two-col,
+    .grid-roles,
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+
+    .board-photo {
+      order: -1;
+      aspect-ratio: 16 / 9;
+    }
+  }
+  @media (max-width: 640px) {
+    .apply-form fieldset {
+      padding: 1rem;
+    }
+
+    .slots th,
+    .slots td {
+      padding: 0.4rem 0.2rem;
+    }
+
+    .slots .hours {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import { boardApplication as app } from "../data/boardApplication.js";
+
+const base = import.meta.env.BASE_URL;
+const onBoardPage = Astro.url.pathname.replace(base, "").replace(/^\/+|\/+$/g, "") === "board";
+---
+
+{
+  app.open && !onBoardPage && (
+    <div class="announce" data-deadline={app.deadline}>
+      <div class="wrap announce-inner">
+        <span>
+          <strong>Executive board applications for {app.term} are open.</strong> Due {app.deadlineLabel}.
+        </span>
+        <a href={`${base}board/`}>Learn more and apply &rarr;</a>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  // Static site: hide the banner once the deadline day has passed, without needing a rebuild.
+  const banner = document.querySelector<HTMLElement>(".announce");
+  const deadline = banner?.dataset.deadline;
+  if (banner && deadline && new Date() > new Date(`${deadline}T23:59:59`)) {
+    banner.remove();
+  }
+</script>
+
+<style>
+  .announce {
+    background: var(--badger-red);
+    color: var(--paper);
+    font-size: 0.95rem;
+  }
+
+  .announce-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    justify-content: center;
+    align-items: baseline;
+    padding-block: 0.6rem;
+    text-align: center;
+  }
+
+  .announce a {
+    color: var(--paper);
+    font-weight: 700;
+  }
+</style>
